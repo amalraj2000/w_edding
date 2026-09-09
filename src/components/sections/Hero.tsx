@@ -206,45 +206,10 @@ export default function Hero({ guestName }: HeroProps) {
             </p>
           </motion.div>
 
-          {/* CTA Button */}
-          <motion.div
-            className="flex justify-center"
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.3 }}
-          >
-            <motion.button
-              onClick={() => setShowInvitation(true)}
-              className="px-10 py-4 font-semibold rounded-full tracking-widest uppercase transition-all shadow-lg"
-              style={{
-                background: 'linear-gradient(135deg, #C9A96E 0%, #A8895A 100%)',
-                color: '#1A1714',
-                fontFamily: 'var(--font-inter), sans-serif',
-                fontSize: '0.7rem',
-                letterSpacing: '0.18em',
-                boxShadow: '0 8px 32px rgba(201,169,110,0.25)',
-              }}
-              whileHover={{ scale: 1.05, boxShadow: '0 12px 40px rgba(201,169,110,0.35)' }}
-              whileTap={{ scale: 0.97 }}
-            >
-              Open Invitation
-            </motion.button>
-          </motion.div>
 
-          {/* Scroll indicator */}
-          <motion.div
-            className="mt-12 hidden sm:flex flex-col items-center gap-1.5"
-            animate={{ y: [0, 7, 0] }}
-            transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
-          >
-            <span
-              className="text-[0.6rem] tracking-widest uppercase"
-              style={{ color: '#6B5E52', fontFamily: 'var(--font-inter), sans-serif' }}
-            >
-              Scroll to explore
-            </span>
-            <div className="w-px h-6" style={{ background: 'linear-gradient(to bottom, #C9A96E, transparent)' }} />
-          </motion.div>
+
+
+
         </motion.div>
 
       ) : (
