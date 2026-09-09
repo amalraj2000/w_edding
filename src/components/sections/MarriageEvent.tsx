@@ -3,109 +3,212 @@
 import { motion } from 'framer-motion';
 import { weddingConfig } from '@/config/wedding.config';
 
+const itemVariants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.65 } },
+};
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.18, delayChildren: 0.2 } },
+};
+
 export default function MarriageEventSection() {
   const { weddingDate, venue } = weddingConfig;
+
+  const mapsUrl = venue.mapLink;
+  const directionsUrl = venue.directions;
 
   return (
     <section
       id="event"
-      className="relative w-full py-16 sm:py-24 px-4 sm:px-6 bg-black overflow-hidden border-t border-yellow-400/10"
+      className="relative w-full py-20 sm:py-28 px-4 sm:px-6 overflow-hidden"
+      style={{
+        background: 'linear-gradient(180deg, #1A1714 0%, #1E1B18 60%, #1A1714 100%)',
+        borderTop: '1px solid rgba(201,169,110,0.1)',
+      }}
     >
-      {/* Background Radial Glow */}
-      <div className="absolute inset-0 opacity-15 pointer-events-none">
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `radial-gradient(ellipse at center, rgba(234, 179, 8, 0.25) 0%, transparent 70%)`,
-          }}
-        />
-      </div>
+      {/* Ambient glow */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{ background: 'radial-gradient(ellipse 60% 40% at 50% 30%, rgba(201,169,110,0.08) 0%, transparent 70%)' }}
+      />
 
-      <div className="max-w-4xl mx-auto relative z-10">
-        {/* Section Header */}
-        <motion.div
-          className="text-center mb-12"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-        >
-          <span className="text-yellow-400 font-semibold tracking-widest text-xs sm:text-sm uppercase mb-2 block">
-            Wedding Ceremony
-          </span>
-          <h2 className="text-3xl sm:text-5xl font-serif font-bold text-white mb-3">
+      <motion.div
+        className="max-w-3xl mx-auto relative z-10"
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+      >
+        {/* Header */}
+        <motion.div className="text-center mb-14" variants={itemVariants}>
+          <p className="section-eyebrow mb-3">Wedding Ceremony</p>
+          <h2
+            className="text-4xl sm:text-6xl font-semibold mb-4"
+            style={{ fontFamily: 'var(--font-cormorant), serif', color: '#F5EFE6' }}
+          >
             Marriage Event Details
           </h2>
-          <p className="text-gray-400 text-sm sm:text-base max-w-xl mx-auto">
+          <p className="text-sm max-w-md mx-auto" style={{ color: '#9B8E83' }}>
             We cordially invite you to share our joy as we exchange our wedding vows.
           </p>
-          <div className="w-16 h-0.5 bg-gradient-to-r from-transparent via-yellow-400 to-transparent mx-auto mt-4" />
+          <div className="ornament-line mt-5" />
         </motion.div>
 
-        {/* Marriage Event Details Card */}
+        {/* Main Card */}
         <motion.div
-          className="bg-gradient-to-b from-zinc-900/90 to-black/90 backdrop-blur-2xl border-2 border-yellow-400/40 rounded-3xl p-6 sm:p-10 md:p-12 shadow-2xl text-center relative overflow-hidden"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          className="luxury-card rounded-3xl p-8 sm:p-12 text-center shadow-2xl relative overflow-hidden"
+          variants={itemVariants}
         >
-          {/* Header Ring Icon */}
-          <div className="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-yellow-400/10 border border-yellow-400/40 text-3xl sm:text-4xl mb-6 shadow-inner">
+          {/* Top glow */}
+          <div
+            className="absolute top-0 left-0 right-0 h-px pointer-events-none"
+            style={{ background: 'linear-gradient(to right, transparent, rgba(201,169,110,0.4), transparent)' }}
+          />
+
+          {/* Icon */}
+          <div
+            className="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-full mb-7 text-2xl sm:text-3xl shadow-inner"
+            style={{ background: 'rgba(201,169,110,0.1)', border: '1px solid rgba(201,169,110,0.3)' }}
+          >
             💒
           </div>
 
-          <h3 className="text-2xl sm:text-4xl font-serif font-bold text-yellow-300 mb-2">
-            Nikah & Wedding Ceremony
+          <h3
+            className="text-2xl sm:text-4xl font-semibold mb-3"
+            style={{ fontFamily: 'var(--font-cormorant), serif', color: '#DFC49A' }}
+          >
+            Nikah &amp; Wedding Ceremony
           </h3>
-          <p className="text-gray-300 text-sm sm:text-base max-w-md mx-auto mb-8">
-            The auspicious ceremony of marriage between Amal & Mashoora
+          <p className="text-sm max-w-md mx-auto mb-10" style={{ color: '#9B8E83' }}>
+            The auspicious ceremony of marriage between Amal &amp; Mashoora
           </p>
 
-          {/* Time & Date Badge Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
-            <div className="bg-black/60 border border-yellow-400/20 rounded-2xl p-4 sm:p-5">
-              <span className="text-2xl mb-1 block">📅</span>
-              <p className="text-gray-400 text-xs uppercase tracking-wider font-semibold">Date</p>
-              <p className="text-yellow-300 font-bold text-base sm:text-lg mt-1">
+          {/* Date / Time / Venue grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
+            {/* Date */}
+            <div
+              className="p-5 sm:p-6 rounded-2xl"
+              style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(201,169,110,0.15)' }}
+            >
+              <p
+                className="text-xs uppercase tracking-widest mb-2"
+                style={{ color: '#6B5E52', fontFamily: 'var(--font-inter)', letterSpacing: '0.15em', fontSize: '0.6rem' }}
+              >
+                Date
+              </p>
+              <p
+                className="text-xl sm:text-2xl font-semibold mb-0.5"
+                style={{ fontFamily: 'var(--font-cormorant), serif', color: '#DFC49A' }}
+              >
                 {weddingDate.displayDate}
               </p>
-              <p className="text-gray-400 text-xs">{weddingDate.day}</p>
+              <p className="text-xs" style={{ color: '#9B8E83' }}>{weddingDate.day}</p>
             </div>
 
-            <div className="bg-black/60 border border-yellow-400/20 rounded-2xl p-4 sm:p-5">
-              <span className="text-2xl mb-1 block">⏰</span>
-              <p className="text-gray-400 text-xs uppercase tracking-wider font-semibold">Time</p>
-              <p className="text-yellow-300 font-bold text-base sm:text-lg mt-1">
+            {/* Time */}
+            <div
+              className="p-5 sm:p-6 rounded-2xl"
+              style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(201,169,110,0.15)' }}
+            >
+              <p
+                className="text-xs uppercase tracking-widest mb-2"
+                style={{ color: '#6B5E52', fontFamily: 'var(--font-inter)', letterSpacing: '0.15em', fontSize: '0.6rem' }}
+              >
+                Time
+              </p>
+              <p
+                className="text-xl sm:text-2xl font-semibold mb-0.5"
+                style={{ fontFamily: 'var(--font-cormorant), serif', color: '#DFC49A' }}
+              >
                 {weddingDate.time}
               </p>
-              <p className="text-gray-400 text-xs">IST ({weddingDate.timezone})</p>
+              <p className="text-xs" style={{ color: '#9B8E83' }}>IST ({weddingDate.timezone})</p>
             </div>
 
-            <div className="bg-black/60 border border-yellow-400/20 rounded-2xl p-4 sm:p-5">
-              <span className="text-2xl mb-1 block">📍</span>
-              <p className="text-gray-400 text-xs uppercase tracking-wider font-semibold">Venue</p>
-              <p className="text-yellow-300 font-bold text-base sm:text-lg mt-1">
+            {/* Venue */}
+            <div
+              className="p-5 sm:p-6 rounded-2xl"
+              style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(201,169,110,0.15)' }}
+            >
+              <p
+                className="text-xs uppercase tracking-widest mb-2"
+                style={{ color: '#6B5E52', fontFamily: 'var(--font-inter)', letterSpacing: '0.15em', fontSize: '0.6rem' }}
+              >
+                Venue
+              </p>
+              <p
+                className="text-xl sm:text-2xl font-semibold mb-0.5"
+                style={{ fontFamily: 'var(--font-cormorant), serif', color: '#DFC49A' }}
+              >
                 {venue.name}
               </p>
-              <p className="text-gray-400 text-xs">Kerala, India</p>
+              <p className="text-xs" style={{ color: '#9B8E83' }}>Kerala, India</p>
             </div>
           </div>
 
-          {/* Directions / Map Link Button */}
-          <div className="pt-4 border-t border-yellow-400/20 flex flex-col sm:flex-row justify-center items-center gap-4">
+          {/* Bottom divider line */}
+          <div
+            className="mb-8 h-px w-full"
+            style={{ background: 'linear-gradient(to right, transparent, rgba(201,169,110,0.25), transparent)' }}
+          />
+
+          {/* Venue address + map buttons */}
+          <div className="mb-6">
+            <p
+              className="text-xs uppercase tracking-widest mb-1"
+              style={{ color: '#6B5E52', fontFamily: 'var(--font-inter)', fontSize: '0.6rem', letterSpacing: '0.15em' }}
+            >
+              Venue Address
+            </p>
             <a
-              href={venue.mapLink}
+              href={mapsUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-8 py-3.5 bg-gradient-to-r from-yellow-400 via-yellow-500 to-amber-500 text-black font-bold rounded-full hover:shadow-lg hover:shadow-yellow-400/40 transition-all text-sm sm:text-base hover:scale-105"
+              className="block transition-opacity hover:opacity-80"
+              style={{ color: '#C8BAB0', fontFamily: 'var(--font-inter)' }}
             >
-              <span>🗺️</span>
-              <span>Open Venue in Google Maps</span>
+              {venue.address}
             </a>
           </div>
+
+          {/* Single premium Google Maps button */}
+          <div className="flex justify-center">
+            <motion.a
+              href={mapsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-3 px-10 py-4 rounded-full font-semibold tracking-widest uppercase transition-all"
+              style={{
+                background: 'linear-gradient(135deg, #C9A96E 0%, #B8924A 100%)',
+                color: '#1A1714',
+                fontFamily: 'var(--font-inter), sans-serif',
+                fontSize: '0.68rem',
+                letterSpacing: '0.18em',
+                boxShadow: '0 8px 32px rgba(201,169,110,0.30), 0 2px 8px rgba(0,0,0,0.4)',
+              }}
+              whileHover={{
+                scale: 1.06,
+                boxShadow: '0 14px 48px rgba(201,169,110,0.45), 0 2px 12px rgba(0,0,0,0.4)',
+              }}
+              whileTap={{ scale: 0.97 }}
+            >
+              {/* Map pin icon */}
+              <span
+                className="flex items-center justify-center w-7 h-7 rounded-full flex-shrink-0"
+                style={{ background: 'rgba(26,23,20,0.25)' }}
+              >
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                  <circle cx="12" cy="10" r="3"/>
+                </svg>
+              </span>
+              Open in Google Maps
+            </motion.a>
+          </div>
         </motion.div>
-      </div>
+      </motion.div>
     </section>
   );
 }

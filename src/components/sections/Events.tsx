@@ -4,124 +4,139 @@ import { motion } from 'framer-motion';
 import { weddingConfig } from '@/config/wedding.config';
 import { formatDate, formatTime } from '@/lib/utils';
 
-export default function EventsSection() {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.3,
-      },
-    },
-  };
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.18, delayChildren: 0.2 } },
+};
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6 },
-    },
-  };
+const itemVariants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.65 } },
+};
+
+export default function EventsSection() {
+  const { venue, events } = weddingConfig;
 
   return (
     <section
       id="events"
-      className="relative w-full py-12 sm:py-20 px-4 sm:px-6 bg-black overflow-hidden"
+      className="relative w-full py-20 sm:py-28 px-4 sm:px-6 overflow-hidden"
+      style={{
+        background: 'linear-gradient(180deg, #1A1714 0%, #1E1B18 60%, #1A1714 100%)',
+        borderTop: '1px solid rgba(201,169,110,0.1)',
+      }}
     >
-      {/* Background Decoration */}
-      <div className="absolute inset-0 opacity-10 pointer-events-none">
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `radial-gradient(ellipse at center, rgba(212, 175, 55, 0.2) 0%, transparent 70%)`,
-          }}
-        />
-      </div>
+      {/* Ambient glow */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{ background: 'radial-gradient(ellipse 70% 50% at 50% 50%, rgba(201,169,110,0.06) 0%, transparent 70%)' }}
+      />
 
-      {/* Container */}
       <motion.div
-        className="relative max-w-6xl mx-auto"
+        className="relative max-w-5xl mx-auto"
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
       >
-        {/* Section Title */}
-        <motion.div
-          className="text-center mb-10 sm:mb-16"
-          variants={itemVariants}
-        >
-          <span className="text-yellow-400 font-semibold tracking-wider text-xs sm:text-sm uppercase mb-2 block">
-            Celebration Schedule
-          </span>
-          <h2 className="text-3xl sm:text-5xl md:text-6xl font-bold text-white mb-3">
+        {/* Header */}
+        <motion.div className="text-center mb-14" variants={itemVariants}>
+          <p className="section-eyebrow mb-3">Celebration Schedule</p>
+          <h2
+            className="text-4xl sm:text-6xl md:text-7xl font-semibold mb-4"
+            style={{ fontFamily: 'var(--font-cormorant), serif', color: '#F5EFE6' }}
+          >
             Wedding{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-500">
-              Events
-            </span>
+            <span style={{ color: '#C9A96E' }}>Events</span>
           </h2>
-          <p className="text-gray-400 text-sm sm:text-base md:text-lg">
+          <p className="text-sm sm:text-base max-w-lg mx-auto" style={{ color: '#9B8E83' }}>
             Join us for each of our special functions and ceremonies
           </p>
+          <div className="ornament-line mt-5" />
         </motion.div>
 
-        {/* Events Timeline */}
-        <motion.div
-          className="space-y-4 sm:space-y-6 md:space-y-8"
-          variants={containerVariants}
-        >
-          {weddingConfig.events.map((event) => (
+        {/* Events List */}
+        <motion.div className="space-y-5" variants={containerVariants}>
+          {events.map((event) => (
             <motion.div
               key={event.id}
               variants={itemVariants}
               whileHover={{ y: -3 }}
             >
               <div
-                className="bg-black/70 border-l-4 border-yellow-400/80 rounded-2xl p-5 sm:p-8 backdrop-blur-md hover:border-yellow-400 transition-all shadow-lg"
-                style={{
-                  background: 'linear-gradient(135deg, rgba(212, 175, 55, 0.08) 0%, rgba(20, 20, 20, 0.8) 100%)',
-                }}
+                className="luxury-card rounded-2xl p-6 sm:p-8 md:p-10 relative overflow-hidden"
+                style={{ borderLeft: '3px solid rgba(201,169,110,0.5)' }}
               >
-                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                  {/* Event Info */}
+                {/* Corner accent */}
+                <div
+                  className="absolute top-0 right-0 w-48 h-full pointer-events-none"
+                  style={{ background: 'linear-gradient(to left, rgba(201,169,110,0.04), transparent)' }}
+                />
+
+                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-5">
+                  {/* Info */}
                   <div className="flex-1">
-                    <div className="flex items-center gap-2 sm:gap-3 mb-2">
-                      <h3 className="text-xl sm:text-3xl md:text-4xl font-bold text-white">
+                    <div className="flex items-center gap-3 mb-3">
+                      <h3
+                        className="text-2xl sm:text-3xl md:text-4xl font-semibold"
+                        style={{ fontFamily: 'var(--font-cormorant), serif', color: '#F5EFE6' }}
+                      >
                         {event.name}
                       </h3>
-                      <span className="text-yellow-400 text-sm sm:text-base">✓</span>
+                      <div
+                        className="w-5 h-5 rounded-full flex items-center justify-center text-[0.6rem] flex-shrink-0"
+                        style={{ background: 'rgba(201,169,110,0.2)', color: '#C9A96E' }}
+                      >
+                        ✓
+                      </div>
                     </div>
 
-                    <p className="text-gray-300 text-sm sm:text-base mb-4">{event.description}</p>
+                    <p className="text-sm mb-5" style={{ color: '#9B8E83' }}>{event.description}</p>
 
-                    <div className="flex flex-col sm:flex-row sm:flex-wrap gap-2.5 sm:gap-6 text-xs sm:text-sm md:text-base">
-                      <div className="flex items-center gap-2 bg-yellow-400/5 px-3 py-1.5 rounded-lg border border-yellow-400/20 w-fit">
-                        <span>📅</span>
-                        <span className="text-gray-300 font-medium">{formatDate(event.date)}</span>
-                      </div>
-                      <div className="flex items-center gap-2 bg-yellow-400/5 px-3 py-1.5 rounded-lg border border-yellow-400/20 w-fit">
-                        <span>🕐</span>
-                        <span className="text-gray-300 font-medium">{formatTime(event.time)}</span>
-                      </div>
-                      <div className="flex items-center gap-2 bg-yellow-400/5 px-3 py-1.5 rounded-lg border border-yellow-400/20 w-fit">
-                        <span>📍</span>
-                        <span className="text-gray-300 font-medium">{event.venue}</span>
-                      </div>
+                    <div className="flex flex-wrap gap-3">
+                      {[
+                        { label: formatDate(event.date), icon: '📅' },
+                        { label: formatTime(event.time), icon: '🕐' },
+                        { label: event.venue, icon: '📍' },
+                      ].map(({ label, icon }) => (
+                        <div
+                          key={label}
+                          className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium"
+                          style={{
+                            background: 'rgba(201,169,110,0.06)',
+                            border: '1px solid rgba(201,169,110,0.15)',
+                            color: '#C8BAB0',
+                            fontFamily: 'var(--font-inter)',
+                          }}
+                        >
+                          <span>{icon}</span>
+                          <span>{label}</span>
+                        </div>
+                      ))}
                     </div>
                   </div>
 
-                  {/* Action Button */}
+                  {/* Action */}
                   <motion.a
-                    href={weddingConfig.venue.directions}
+                    href={venue.directions}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full md:w-auto text-center px-6 py-3 bg-yellow-400 text-black font-bold rounded-xl hover:bg-yellow-500 transition-colors text-sm sm:text-base shrink-0"
-                    whileHover={{ scale: 1.03 }}
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold tracking-widest uppercase shrink-0 transition-all"
+                    style={{
+                      background: 'rgba(201,169,110,0.1)',
+                      border: '1.5px solid rgba(201,169,110,0.35)',
+                      color: '#C9A96E',
+                      fontFamily: 'var(--font-inter), sans-serif',
+                      fontSize: '0.62rem',
+                      letterSpacing: '0.12em',
+                    }}
+                    whileHover={{ background: 'rgba(201,169,110,0.18)', scale: 1.03 }}
                     whileTap={{ scale: 0.97 }}
                   >
-                    Get Directions
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <polygon points="3 11 22 2 13 21 11 13 3 11"/>
+                    </svg>
+                    Directions
                   </motion.a>
                 </div>
               </div>
@@ -129,59 +144,72 @@ export default function EventsSection() {
           ))}
         </motion.div>
 
-        {/* Venue Info */}
+        {/* Venue Info Card */}
         <motion.div
-          className="mt-12 sm:mt-16 p-5 sm:p-8 bg-gradient-to-br from-yellow-500/10 to-yellow-600/5 border-2 border-yellow-400/30 rounded-2xl text-center backdrop-blur-md shadow-xl"
+          className="mt-12 sm:mt-16 luxury-card rounded-2xl p-7 sm:p-10 text-center relative overflow-hidden"
           variants={itemVariants}
         >
-          <span className="text-2xl sm:text-3xl mb-2 block">🏛️</span>
-          <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
-            {weddingConfig.venue.name}
+          {/* Ornamental top */}
+          <div
+            className="absolute top-0 left-0 right-0 h-px"
+            style={{ background: 'linear-gradient(to right, transparent, rgba(201,169,110,0.4), transparent)' }}
+          />
+
+          <div
+            className="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-5 text-xl"
+            style={{ background: 'rgba(201,169,110,0.1)', border: '1px solid rgba(201,169,110,0.25)' }}
+          >
+            🏛️
+          </div>
+
+          <h3
+            className="text-2xl sm:text-3xl md:text-4xl font-semibold mb-2"
+            style={{ fontFamily: 'var(--font-cormorant), serif', color: '#F5EFE6' }}
+          >
+            {venue.name}
           </h3>
-          <p className="text-gray-300 text-xs sm:text-sm md:text-base mb-6 max-w-xl mx-auto">{weddingConfig.venue.address}</p>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <a
+            href={venue.mapLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block text-sm sm:text-base mb-8 transition-opacity hover:opacity-75"
+            style={{ color: '#9B8E83' }}
+          >
+            {venue.address}
+          </a>
+
+          <div className="flex justify-center">
             <motion.a
-              href={weddingConfig.venue.mapLink}
+              href={venue.mapLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full px-5 py-3 bg-yellow-400 text-black font-bold rounded-xl hover:bg-yellow-500 transition-colors text-sm sm:text-base"
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
-            >
-              📍 View Map
-            </motion.a>
-
-            <motion.a
-              href={weddingConfig.venue.directions}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full px-5 py-3 border-2 border-yellow-400 text-yellow-400 font-bold rounded-xl hover:bg-yellow-400/10 transition-colors text-sm sm:text-base"
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
-            >
-              🚗 Directions
-            </motion.a>
-
-            <motion.button
-              onClick={() => {
-                if (navigator.share) {
-                  navigator.share({
-                    title: 'Wedding Venue',
-                    text: weddingConfig.venue.address,
-                    url: weddingConfig.venue.mapLink,
-                  }).catch(() => {});
-                } else {
-                  navigator.clipboard.writeText(weddingConfig.venue.mapLink);
-                  alert('Venue link copied to clipboard!');
-                }
+              className="inline-flex items-center gap-3 px-10 py-4 rounded-full font-semibold tracking-widest uppercase transition-all"
+              style={{
+                background: 'linear-gradient(135deg, #C9A96E 0%, #B8924A 100%)',
+                color: '#1A1714',
+                fontFamily: 'var(--font-inter), sans-serif',
+                fontSize: '0.68rem',
+                letterSpacing: '0.18em',
+                boxShadow: '0 8px 32px rgba(201,169,110,0.30), 0 2px 8px rgba(0,0,0,0.4)',
               }}
-              className="w-full px-5 py-3 border-2 border-yellow-400 text-yellow-400 font-bold rounded-xl hover:bg-yellow-400/10 transition-colors text-sm sm:text-base"
-              whileHover={{ scale: 1.03 }}
+              whileHover={{
+                scale: 1.06,
+                boxShadow: '0 14px 48px rgba(201,169,110,0.45), 0 2px 12px rgba(0,0,0,0.4)',
+              }}
               whileTap={{ scale: 0.97 }}
             >
-              ↗️ Share Venue
-            </motion.button>
+              <span
+                className="flex items-center justify-center w-7 h-7 rounded-full flex-shrink-0"
+                style={{ background: 'rgba(26,23,20,0.25)' }}
+              >
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                  <circle cx="12" cy="10" r="3"/>
+                </svg>
+              </span>
+              Open in Google Maps
+            </motion.a>
           </div>
         </motion.div>
       </motion.div>

@@ -2,129 +2,151 @@
 
 import { motion } from 'framer-motion';
 import { weddingConfig } from '@/config/wedding.config';
-import { getGuestName } from '@/lib/utils';
 
 interface StoryProps {
   guestName?: string | null;
 }
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.18, delayChildren: 0.2 } },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.65 } },
+};
+
 export default function StorySection({ guestName }: StoryProps) {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.3,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6 },
-    },
-  };
-
   return (
     <section
       id="story"
-      className="relative w-full min-h-screen bg-black py-12 sm:py-20 px-4 sm:px-6 overflow-hidden"
+      className="relative w-full min-h-screen py-20 sm:py-28 px-4 sm:px-6 overflow-hidden"
+      style={{
+        background: 'linear-gradient(180deg, #1A1714 0%, #1E1B18 60%, #1A1714 100%)',
+        borderTop: '1px solid rgba(201,169,110,0.1)',
+      }}
     >
-      {/* Background Decoration */}
-      <div className="absolute inset-0 opacity-10 pointer-events-none">
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `radial-gradient(ellipse at center, rgba(212, 175, 55, 0.2) 0%, transparent 70%)`,
-          }}
-        />
-      </div>
+      {/* Ambient glow */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{ background: 'radial-gradient(ellipse 70% 50% at 50% 30%, rgba(201,169,110,0.07) 0%, transparent 70%)' }}
+      />
 
-      {/* Container */}
       <motion.div
-        className="relative max-w-6xl mx-auto"
+        className="relative max-w-5xl mx-auto"
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
       >
-        {/* Personal Welcome Message */}
-        <motion.div
-          className="text-center mb-12 sm:mb-16 max-w-3xl mx-auto"
-          variants={itemVariants}
-        >
-          <span className="text-yellow-400 font-semibold tracking-wider text-xs sm:text-sm uppercase mb-2 block">
-            Our Love Story
-          </span>
-          <h2 className="text-3xl sm:text-5xl md:text-6xl font-bold text-white mb-4">
+        {/* Welcome Message */}
+        <motion.div className="text-center mb-14 max-w-3xl mx-auto" variants={itemVariants}>
+          <p className="section-eyebrow mb-3">Our Love Story</p>
+          <h2
+            className="text-4xl sm:text-6xl md:text-7xl font-semibold mb-6"
+            style={{ fontFamily: 'var(--font-cormorant), serif', color: '#F5EFE6' }}
+          >
             Dear {guestName || 'Guest'}
           </h2>
-          <p className="text-gray-300 text-base sm:text-lg leading-relaxed">
+          <p className="text-base sm:text-lg leading-relaxed mb-4" style={{ color: '#C8BAB0' }}>
             We are delighted to invite you to celebrate the most important day
             of our lives. Your presence and blessings will make this moment even
             more special and memorable for us.
           </p>
-          <p className="text-gray-400 text-sm sm:text-base mt-4 sm:mt-6 italic">
+          <p className="text-sm sm:text-base italic" style={{ color: '#9B8E83', fontFamily: 'var(--font-cormorant), serif', fontSize: '1.1rem' }}>
             Together with our families, we request the pleasure of your company
             to share in our joy and be a part of this beautiful journey.
           </p>
+          <div className="ornament-line mt-7" />
         </motion.div>
 
-        {/* Story Timeline */}
+        {/* Milestones */}
         {weddingConfig.coupleStory && weddingConfig.coupleStory.length > 0 && (
-          <motion.div className="mb-16 sm:mb-20" variants={containerVariants}>
-            <h3 className="text-2xl sm:text-3xl font-bold text-center text-yellow-400 mb-8 sm:mb-12">
+          <motion.div className="mb-20" variants={containerVariants}>
+            <motion.h3
+              className="text-2xl sm:text-3xl text-center mb-10 font-semibold"
+              style={{ fontFamily: 'var(--font-cormorant), serif', color: '#C9A96E' }}
+              variants={itemVariants}
+            >
               Milestones of Our Love
-            </h3>
+            </motion.h3>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-              {weddingConfig.coupleStory.map((story) => (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+              {weddingConfig.coupleStory.map((story, i) => (
                 <motion.div
                   key={story.id}
                   variants={itemVariants}
-                  whileHover={{ y: -5 }}
-                  className="bg-black/60 border border-yellow-400/30 rounded-2xl p-5 sm:p-6 text-center backdrop-blur-md relative flex flex-col justify-between"
+                  whileHover={{ y: -6 }}
+                  className="luxury-card luxury-card-hover rounded-2xl p-6 sm:p-7 text-center relative flex flex-col"
                 >
-                  <div>
-                    <div className="text-4xl sm:text-5xl mb-3">{story.icon}</div>
-                    <span className="inline-block px-3 py-1 bg-yellow-400/10 border border-yellow-400/30 text-yellow-400 text-xs font-bold rounded-full mb-3">
-                      {story.year}
-                    </span>
-                    <h4 className="text-lg sm:text-xl font-bold text-white mb-2">
-                      {story.title}
-                    </h4>
-                    <p className="text-gray-400 text-xs sm:text-sm leading-relaxed">
-                      {story.description}
-                    </p>
+                  {/* Step number */}
+                  <div
+                    className="absolute top-4 right-4 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold"
+                    style={{ background: 'rgba(201,169,110,0.1)', color: '#C9A96E', fontFamily: 'var(--font-inter)' }}
+                  >
+                    {i + 1}
                   </div>
+
+                  <div className="text-4xl sm:text-5xl mb-4">{story.icon}</div>
+
+                  <span
+                    className="inline-block px-3 py-1 rounded-full text-xs font-semibold mb-4"
+                    style={{
+                      background: 'rgba(201,169,110,0.1)',
+                      border: '1px solid rgba(201,169,110,0.25)',
+                      color: '#C9A96E',
+                      fontFamily: 'var(--font-inter), sans-serif',
+                      fontSize: '0.62rem',
+                      letterSpacing: '0.1em',
+                    }}
+                  >
+                    {story.year}
+                  </span>
+
+                  <h4
+                    className="text-xl sm:text-2xl font-semibold mb-3"
+                    style={{ fontFamily: 'var(--font-cormorant), serif', color: '#F5EFE6' }}
+                  >
+                    {story.title}
+                  </h4>
+                  <p className="text-xs sm:text-sm leading-relaxed" style={{ color: '#9B8E83' }}>
+                    {story.description}
+                  </p>
                 </motion.div>
               ))}
             </div>
           </motion.div>
         )}
 
-        {/* Couple Introduction */}
-        <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 mb-12"
-          variants={containerVariants}
-        >
+        {/* Couple Introduction Cards */}
+        <motion.div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-14" variants={containerVariants}>
           {/* Groom */}
           <motion.div
             variants={itemVariants}
-            className="bg-gradient-to-br from-blue-500/10 to-blue-600/5 border-2 border-blue-400/30 rounded-2xl p-6 sm:p-8 text-center backdrop-blur-md flex flex-col justify-between"
-            whileHover={{ y: -4 }}
+            whileHover={{ y: -5 }}
+            className="luxury-card luxury-card-hover rounded-2xl p-7 sm:p-9 text-center flex flex-col justify-between"
           >
             <div>
-              <div className="text-5xl sm:text-6xl mb-4">💎</div>
-              <h3 className="text-2xl sm:text-3xl font-bold text-white mb-1">
+              <div
+                className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-5 text-2xl"
+                style={{ background: 'rgba(201,169,110,0.1)', border: '1px solid rgba(201,169,110,0.2)' }}
+              >
+                👤
+              </div>
+              <h3
+                className="text-2xl sm:text-3xl font-semibold mb-1"
+                style={{ fontFamily: 'var(--font-cormorant), serif', color: '#F5EFE6' }}
+              >
                 {weddingConfig.groom.name}
               </h3>
-              <p className="text-blue-400 font-semibold mb-4 text-sm">Groom</p>
-              <p className="text-gray-300 text-sm sm:text-base mb-6">
+              <p
+                className="text-xs uppercase tracking-widest mb-5 font-medium"
+                style={{ color: '#C9A96E', fontFamily: 'var(--font-inter)', fontSize: '0.6rem', letterSpacing: '0.15em' }}
+              >
+                Groom
+              </p>
+              <p className="text-sm sm:text-base mb-7 leading-relaxed" style={{ color: '#9B8E83' }}>
                 A wonderful person who makes every moment special with love,
                 laughter, and endless support.
               </p>
@@ -133,8 +155,16 @@ export default function StorySection({ guestName }: StoryProps) {
               href={weddingConfig.groom.whatsapp}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full sm:w-auto inline-block px-6 py-2.5 bg-blue-400 text-black font-bold rounded-xl hover:bg-blue-500 transition-colors text-center text-sm"
-              whileHover={{ scale: 1.03 }}
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold tracking-widest uppercase transition-all"
+              style={{
+                border: '1.5px solid rgba(201,169,110,0.35)',
+                color: '#C9A96E',
+                background: 'transparent',
+                fontFamily: 'var(--font-inter), sans-serif',
+                fontSize: '0.62rem',
+                letterSpacing: '0.15em',
+              }}
+              whileHover={{ background: 'rgba(201,169,110,0.1)', scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
             >
               Message Groom
@@ -144,16 +174,29 @@ export default function StorySection({ guestName }: StoryProps) {
           {/* Bride */}
           <motion.div
             variants={itemVariants}
-            className="bg-gradient-to-br from-pink-500/10 to-pink-600/5 border-2 border-pink-400/30 rounded-2xl p-6 sm:p-8 text-center backdrop-blur-md flex flex-col justify-between"
-            whileHover={{ y: -4 }}
+            whileHover={{ y: -5 }}
+            className="luxury-card luxury-card-hover rounded-2xl p-7 sm:p-9 text-center flex flex-col justify-between"
           >
             <div>
-              <div className="text-5xl sm:text-6xl mb-4">👑</div>
-              <h3 className="text-2xl sm:text-3xl font-bold text-white mb-1">
+              <div
+                className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-5 text-2xl"
+                style={{ background: 'rgba(201,169,110,0.1)', border: '1px solid rgba(201,169,110,0.2)' }}
+              >
+                👤
+              </div>
+              <h3
+                className="text-2xl sm:text-3xl font-semibold mb-1"
+                style={{ fontFamily: 'var(--font-cormorant), serif', color: '#F5EFE6' }}
+              >
                 {weddingConfig.bride.name}
               </h3>
-              <p className="text-pink-400 font-semibold mb-4 text-sm">Bride</p>
-              <p className="text-gray-300 text-sm sm:text-base mb-6">
+              <p
+                className="text-xs uppercase tracking-widest mb-5 font-medium"
+                style={{ color: '#C9A96E', fontFamily: 'var(--font-inter)', fontSize: '0.6rem', letterSpacing: '0.15em' }}
+              >
+                Bride
+              </p>
+              <p className="text-sm sm:text-base mb-7 leading-relaxed" style={{ color: '#9B8E83' }}>
                 A beautiful soul who brings light, grace, and happiness to
                 everyone around her.
               </p>
@@ -162,8 +205,16 @@ export default function StorySection({ guestName }: StoryProps) {
               href={weddingConfig.bride.whatsapp}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full sm:w-auto inline-block px-6 py-2.5 bg-pink-400 text-black font-bold rounded-xl hover:bg-pink-500 transition-colors text-center text-sm"
-              whileHover={{ scale: 1.03 }}
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold tracking-widest uppercase transition-all"
+              style={{
+                border: '1.5px solid rgba(201,169,110,0.35)',
+                color: '#C9A96E',
+                background: 'transparent',
+                fontFamily: 'var(--font-inter), sans-serif',
+                fontSize: '0.62rem',
+                letterSpacing: '0.15em',
+              }}
+              whileHover={{ background: 'rgba(201,169,110,0.1)', scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
             >
               Message Bride
@@ -173,13 +224,34 @@ export default function StorySection({ guestName }: StoryProps) {
 
         {/* Quote */}
         <motion.div
-          className="text-center py-8 sm:py-12 border-t-2 border-b-2 border-yellow-400/30"
+          className="text-center py-10 sm:py-14 relative"
           variants={itemVariants}
         >
-          <p className="text-xl sm:text-2xl md:text-3xl font-light text-gray-300 italic px-2">
-            "Two souls, one heart, infinite love"
+          <div
+            className="absolute top-0 left-0 right-0 h-px"
+            style={{ background: 'linear-gradient(to right, transparent, rgba(201,169,110,0.3), transparent)' }}
+          />
+          <div
+            className="absolute bottom-0 left-0 right-0 h-px"
+            style={{ background: 'linear-gradient(to right, transparent, rgba(201,169,110,0.3), transparent)' }}
+          />
+
+          {/* Opening quote mark */}
+          <div
+            className="text-6xl sm:text-7xl leading-none mb-3 block"
+            style={{ fontFamily: 'var(--font-cormorant), serif', color: 'rgba(201,169,110,0.2)', lineHeight: 0.8 }}
+          >
+            "
+          </div>
+          <p
+            className="text-xl sm:text-2xl md:text-3xl italic font-light leading-relaxed max-w-2xl mx-auto"
+            style={{ fontFamily: 'var(--font-cormorant), serif', color: '#C8BAB0' }}
+          >
+            Two souls, one heart, infinite love
           </p>
-          <p className="text-gray-400 text-xs sm:text-sm mt-3">- {weddingConfig.groom.name} & {weddingConfig.bride.name}</p>
+          <p className="text-xs mt-4 tracking-widest uppercase" style={{ color: '#6B5E52', fontFamily: 'var(--font-inter)', fontSize: '0.6rem', letterSpacing: '0.15em' }}>
+            — {weddingConfig.groom.name} &amp; {weddingConfig.bride.name}
+          </p>
         </motion.div>
       </motion.div>
     </section>

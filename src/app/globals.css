@@ -1,26 +1,46 @@
 @import "tailwindcss";
 
+/* ═══════════════════════════════════════════════
+   LUXURY WEDDING DESIGN SYSTEM
+   Palette: Warm Ivory · Champagne · Charcoal
+   ═══════════════════════════════════════════════ */
+
 :root {
-  --background: #000000;
-  --foreground: #ffffff;
-  --primary: #d4af37;
-  --primary-dark: #1a1a1a;
+  /* Core Backgrounds */
+  --bg-primary: #1A1714;
+  --bg-secondary: #211D1A;
+  --bg-card: #26211E;
+  --bg-card-hover: #2C2723;
+
+  /* Champagne Gold Accent */
+  --champagne: #C9A96E;
+  --champagne-light: #DFC49A;
+  --champagne-muted: #A8895A;
+  --champagne-faint: rgba(201, 169, 110, 0.12);
+  --champagne-border: rgba(201, 169, 110, 0.25);
+  --champagne-border-strong: rgba(201, 169, 110, 0.45);
+
+  /* Text Colors */
+  --text-primary: #F5EFE6;
+  --text-secondary: #C8BAB0;
+  --text-muted: #9B8E83;
+  --text-faint: #6B5E52;
+
+  /* Legacy compat */
+  --background: var(--bg-primary);
+  --foreground: var(--text-primary);
+  --primary: #C9A96E;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background: var(--bg-primary);
+  --color-foreground: var(--text-primary);
+  --font-serif: var(--font-cormorant);
+  --font-sans: var(--font-inter);
+  --font-mono: monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* ─── Reset ─────────────────────────────────── */
 * {
   margin: 0;
   padding: 0;
@@ -29,113 +49,59 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 70px;
+  scroll-padding-top: 72px;
   overflow-x: hidden;
   width: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-geist-sans), system-ui, -apple-system,
-    sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
   overflow-x: hidden;
   width: 100%;
   max-width: 100vw;
-  line-height: 1.6;
+  line-height: 1.65;
   -webkit-tap-highlight-color: transparent;
+  font-size: 16px;
 }
 
-/* Custom scrollbar */
+/* ─── Custom Scrollbar ───────────────────────── */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 5px;
 }
-
 ::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.5);
+  background: var(--bg-secondary);
 }
-
 ::-webkit-scrollbar-thumb {
-  background: #d4af37;
+  background: var(--champagne-muted);
   border-radius: 4px;
 }
-
 ::-webkit-scrollbar-thumb:hover {
-  background: #f4c961;
+  background: var(--champagne);
 }
 
-/* Selection styles */
+/* ─── Selection ──────────────────────────────── */
 ::selection {
-  background: #d4af37;
-  color: #000;
+  background: var(--champagne);
+  color: var(--bg-primary);
 }
 
-/* Smooth animations */
-@supports (animation-timeline: view()) {
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  @keyframes fadeInDown {
-    from {
-      opacity: 0;
-      transform: translateY(-30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  @keyframes scaleIn {
-    from {
-      opacity: 0;
-      transform: scale(0.9);
-    }
-    to {
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
-}
-
-/* Focus styles for accessibility */
-button:focus-visible,
-a:focus-visible,
-input:focus-visible,
-textarea:focus-visible,
-select:focus-visible {
-  outline: 2px solid #d4af37;
-  outline-offset: 2px;
-}
-
-/* Animation utilities */
-@keyframes shimmer {
-  0% {
-    background-position: -1000px 0;
-  }
-  100% {
-    background-position: 1000px 0;
-  }
-}
-
-/* Typography */
+/* ─── Typography ─────────────────────────────── */
 h1, h2, h3, h4, h5, h6 {
-  font-weight: 700;
-  letter-spacing: -0.01em;
+  font-family: var(--font-cormorant), 'Georgia', serif;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1.15;
   word-break: break-word;
+  color: var(--text-primary);
 }
 
 p {
-  line-height: 1.7;
+  font-family: var(--font-inter), system-ui, sans-serif;
+  line-height: 1.75;
   word-break: break-word;
+  color: var(--text-secondary);
 }
 
 a {
@@ -143,20 +109,92 @@ a {
   transition: all 0.3s ease;
 }
 
-/* Form elements - 16px minimum font on mobile prevents iOS auto-zoom */
+/* ─── Form elements ──────────────────────────── */
 input,
 textarea,
 select {
-  font-family: inherit;
+  font-family: var(--font-inter), system-ui, sans-serif;
   font-size: 16px !important;
 }
-
 input::placeholder,
 textarea::placeholder {
-  opacity: 0.6;
+  opacity: 0.5;
 }
 
-/* Accessibility */
+/* ─── Focus ──────────────────────────────────── */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--champagne);
+  outline-offset: 2px;
+}
+
+/* ─── Luxury UI Utilities ────────────────────── */
+.luxury-card {
+  background: var(--bg-card);
+  border: 1px solid var(--champagne-border);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.luxury-card-hover {
+  transition: border-color 0.3s ease, background 0.3s ease, transform 0.3s ease;
+}
+.luxury-card-hover:hover {
+  border-color: var(--champagne-border-strong);
+  background: var(--bg-card-hover);
+}
+
+.section-eyebrow {
+  font-family: var(--font-inter), sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--champagne);
+}
+
+.section-title {
+  font-family: var(--font-cormorant), serif;
+  font-weight: 600;
+}
+
+.ornament-line {
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--champagne), transparent);
+  margin: 0 auto;
+}
+
+/* ─── Animations ─────────────────────────────── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.94); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -1000px 0; }
+  100% { background-position: 1000px 0; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-8px); }
+}
+
+/* ─── Accessibility ──────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: 0.01ms !important;

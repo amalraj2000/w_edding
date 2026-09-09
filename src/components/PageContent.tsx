@@ -6,7 +6,7 @@ import Hero from '@/components/sections/Hero';
 import GroomSection from '@/components/sections/Groom';
 import BrideSection from '@/components/sections/Bride';
 import MarriageEventSection from '@/components/sections/MarriageEvent';
-import CountdownSection from '@/components/sections/Countdown';
+// import CountdownSection from '@/components/sections/Countdown';
 
 export default function PageContent() {
   const searchParams = useSearchParams();
@@ -34,8 +34,8 @@ export default function PageContent() {
       {/* Marriage Event Section */}
       <MarriageEventSection />
 
-      {/* Countdown Section */}
-      <CountdownSection />
+      {/* Countdown Section — temporarily hidden */}
+      {/* <CountdownSection /> */}
     </main>
   );
 }

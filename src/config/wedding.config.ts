@@ -46,8 +46,8 @@ export const weddingConfig = {
     pincode: "673645",
     address: "Edavennapara, Kerala",
     mapLink:
-      "https://www.google.com/maps/search/Edavennapara",
-    directions: "https://maps.app.goo.gl/placeholder",
+      "https://www.google.com/maps/search/?api=1&query=Edavennapara+Kerala+673645",
+    directions: "https://www.google.com/maps/dir/?api=1&destination=Edavennapara+Kerala+673645",
   },
 
   // Events Timeline
